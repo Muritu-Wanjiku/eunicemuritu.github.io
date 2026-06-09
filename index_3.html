@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Eunice Muritu, Data Annotation Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1117;
+    --navy-2: #161B22;
+    --navy-3: #21262D;
+    --teal: #00D4AA;
+    --teal-dim: rgba(0,212,170,0.12);
+    --white: #F0F6FC;
+    --grey: #8B949E;
+    --border: rgba(255,255,255,0.08);
+    --sidebar-w: 280px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--navy-2);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.75rem;
+    z-index: 100;
+  }
+
+  .sidebar-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--teal-dim);
+    border: 2px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .sidebar-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+    margin-bottom: 2rem;
+  }
+
+  nav { flex: 1; }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-bottom: 0.25rem;
+  }
+
+  nav a:hover, nav a.active {
+    background: var(--teal-dim);
+    color: var(--teal);
+  }
+
+  nav a .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .sidebar-contact {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .sidebar-contact a {
+    display: block;
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .sidebar-contact a:hover { color: var(--teal); }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0;
+  }
+
+  section {
+    padding: 5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 900px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+  }
+
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  p { color: var(--grey); margin-bottom: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 4rem;
+    max-width: 100%;
+  }
+
+  .hero-canvas {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--teal);
+  }
+
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+  }
+
+  .hero-title span { color: var(--teal); }
+
+  .hero-desc {
+    color: var(--grey);
+    font-size: 1.05rem;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: var(--navy);
+  }
+  .btn-primary:hover { background: #00f0c0; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    margin-left: 0.75rem;
+  }
+  .btn-ghost:hover { background: var(--teal-dim); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .skill-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .skill-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-2px);
+  }
+
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+
+  .skill-desc {
+    font-size: 0.775rem;
+    color: var(--grey);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-category {
+    margin-bottom: 3.5rem;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .category-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--navy);
+    background: var(--teal);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .portfolio-item {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .portfolio-item:hover {
+    border-color: var(--teal);
+    transform: translateY(-3px);
+  }
+
+  .portfolio-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    background: var(--navy-3);
+  }
+
+  .portfolio-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--navy-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .portfolio-info {
+    padding: 1rem;
+  }
+
+  .portfolio-info h3 {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .portfolio-info p {
+    font-size: 0.775rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── TOOLS ── */
+  .tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tool-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(0,212,170,0.25);
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .contact-card {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    display: block;
+  }
+
+  .contact-card:hover { border-color: var(--teal); }
+
+  .contact-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-card-value {
+    font-size: 0.875rem;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* ── ANNOTATION HERO ANIMATION ── */
+  .anno-box {
+    position: absolute;
+    border: 2px solid var(--teal);
+    border-radius: 2px;
+    opacity: 0;
+    animation: drawBox 0.4s ease forwards;
+  }
+
+  @keyframes drawBox {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 0.35; transform: scale(1); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    section, #hero { padding: 3rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-avatar">EM</div>
+  <div class="sidebar-name">Eunice Muritu</div>
+  <div class="sidebar-title">Data Annotation Specialist</div>
+
+  <nav>
+    <a href="#hero" class="active"><span class="nav-dot"></span> Home</a>
+    <a href="#about"><span class="nav-dot"></span> About</a>
+    <a href="#skills"><span class="nav-dot"></span> Skills</a>
+    <a href="#portfolio"><span class="nav-dot"></span> Portfolio</a>
+    <a href="#tools"><span class="nav-dot"></span> Tools</a>
+    <a href="#contact"><span class="nav-dot"></span> Contact</a>
+  </nav>
+
+  <div class="sidebar-contact">
+    <a href="mailto:wanjikumuritu91@gmail.com">✉ wanjikumuritu91@gmail.com</a>
+        <a href="https://www.upwork.com/freelancers/~01ebf55998e33595fb" target="_blank">↗ Upwork Profile</a>
+    <a href="https://github.com/eunicemuritu" target="_blank">⌥ GitHub</a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <!-- animated annotation boxes in background -->
+    <div class="anno-box" style="width:120px;height:80px;top:20%;right:25%;animation-delay:0.5s"></div>
+    <div class="anno-box" style="width:80px;height:60px;top:40%;right:35%;animation-delay:0.9s;border-color:#FF6B6B"></div>
+    <div class="anno-box" style="width:100px;height:70px;top:60%;right:20%;animation-delay:1.3s;border-color:#FFD93D"></div>
+    <div class="anno-box" style="width:60px;height:50px;top:30%;right:15%;animation-delay:1.7s;border-color:#6BCB77"></div>
+
+    <div class="hero-tag">Available for work</div>
+    <h1 class="hero-title">
+      Turning raw data into<br/>
+      <span>AI-ready intelligence.</span>
+    </h1>
+    <p class="hero-desc">
+      Data annotation specialist with hands-on experience across satellite imagery,
+      video tracking, semantic segmentation, speech transcription, and retail detection.
+     
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Annotation Types</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Active Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Accuracy Focus</div>
+      </div>
+    </div>
+
+    <div>
+      <a href="#portfolio" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-ghost">Hire Me</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">about</div>
+    <h2>Who I Am</h2>
+    <p>
+      I'm a data annotation specialist based in Nairobi, Kenya, with practical experience
+      labeling diverse datasets for machine learning and AI training pipelines. I work
+      with structured precision, whether tracing polygon boundaries around satellite
+      buildings, tracking vehicles across video frames, or transcribing speech with
+      African accent awareness.
+    </p>
+    <p>
+      My background combines technical annotation skills with an understanding of what
+      AI models actually need: clean, consistent, well-labeled data. I've worked across
+      autonomous driving, geospatial intelligence, retail analytics, and NLP datasets.
+    </p>
+    <p>
+      I use Label Studio as my primary annotation platform and am experienced with
+      bounding boxes, polygons, keypoints, semantic segmentation, and audio transcription workflows.
+    </p>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">skills</div>
+    <h2>Annotation Specializations</h2>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🛰️</div>
+        <div class="skill-name">Geospatial Annotation</div>
+        <p class="skill-desc">Satellite and aerial imagery segmentation, buildings, roads, vegetation, water bodies.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎬</div>
+        <div class="skill-name">Video Object Tracking</div>
+        <p class="skill-desc">Frame-by-frame bounding box tracking of vehicles and pedestrians across video sequences.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔷</div>
+        <div class="skill-name">Semantic Segmentation</div>
+        <p class="skill-desc">Polygon annotation for road scenes, sky, trees, buildings, vehicles, road surfaces.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎙️</div>
+        <div class="skill-name">Speech Transcription</div>
+        <p class="skill-desc">Audio-to-text transcription with strong accent recognition and attention to natural speech patterns.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🛒</div>
+        <div class="skill-name">Retail Product Detection</div>
+        <p class="skill-desc">Shelf image annotation for product detection and planogram compliance datasets.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🚗</div>
+        <div class="skill-name">Autonomous Driving Data</div>
+        <p class="skill-desc">Road scene labeling for self-driving AI, lane markings, signs, obstacles, pedestrians.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-label">portfolio</div>
+    <h2>Annotation Work Samples</h2>
+
+    <!-- Geospatial -->
+    <div class="portfolio-category">
+      <div class="category-header">
+        <span class="category-tag">Geospatial</span>
+        <h3 style="margin:0; font-size:1rem;">Satellite & Aerial Image Annotation</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="images/annotation_a.png" alt="Satellite annotation A" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🛰️</div>
+          <div class="portfolio-info">
+            <h3>Urban Area Segmentation</h3>
+            <p>Multi-class polygon labeling of buildings, roads, and vegetation from aerial imagery.</p>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <img src="images/annotation_b.png" alt="Satellite annotation B" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🛰️</div>
+          <div class="portfolio-info">
+            <h3>Coastal & Land Cover</h3>
+            <p>Boundary detection and classification of land use types from satellite data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Semantic Segmentation -->
+    <div class="portfolio-category">
+      <div class="category-header">
+        <span class="category-tag">Segmentation</span>
+        <h3 style="margin:0; font-size:1rem;">Polygon Semantic Segmentation</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="images/x11y.png" alt="Road scene segmentation" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🔷</div>
+          <div class="portfolio-info">
+            <h3>Urban Street Scene</h3>
+            <p>Mixed annotation, polygon segmentation for environment + bounding boxes for vehicles.</p>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <img src="images/x12y_cropped.png" alt="Street segmentation" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🔷</div>
+          <div class="portfolio-info">
+            <h3>Multi-Class Road Segmentation</h3>
+            <p>Sky, trees, buildings, vegetation, and vehicles labeled across a busy intersection.</p>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <img src="images/x13y_cropped.png" alt="Road annotation" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🔷</div>
+          <div class="portfolio-info">
+            <h3>Road & Infrastructure</h3>
+            <p>Grass, road surface, signage, and building polygon segmentation for driving datasets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Tracking -->
+    <div class="portfolio-category">
+      <div class="category-header">
+        <span class="category-tag">Video</span>
+        <h3 style="margin:0; font-size:1rem;">Video Object Tracking</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <div class="portfolio-img-placeholder" style="background:#0d1117; border:1px dashed rgba(0,212,170,0.3);">
+            🎬
+          </div>
+          <div class="portfolio-info">
+            <h3>Vehicle Tracking, Color ID System</h3>
+            <p>Each car assigned a unique color ID (Car-1 yellow, Car-2 red, Car-3 green) tracked across all frames using Label Studio's VideoRectangle tool.</p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--teal); margin-top:0.75rem;">
+        ↳ Screen recording available on request, shows live bounding box tracking across frames.
+      </p>
+    </div>
+
+    <!-- Speech -->
+    <div class="portfolio-category">
+      <div class="category-header">
+        <span class="category-tag">NLP</span>
+        <h3 style="margin:0; font-size:1rem;">Speech-to-Text Transcription</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <div class="portfolio-img-placeholder">🎙️</div>
+          <div class="portfolio-info">
+            <h3>African Accent Transcription</h3>
+            <p>Verbatim transcription of English audio with attention to natural speech patterns, accents, and speaker notes. Completed in Label Studio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Retail -->
+    <div class="portfolio-category">
+      <div class="category-header">
+        <span class="category-tag">Retail</span>
+        <h3 style="margin:0; font-size:1rem;">Product & Shelf Detection</h3>
+      </div>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="images/label1.png" alt="Retail annotation" class="portfolio-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="portfolio-img-placeholder" style="display:none">🛒</div>
+          <div class="portfolio-info">
+            <h3>Supermarket Shelf Labeling</h3>
+            <p>Bounding box annotation of individual products across retail shelf imagery for planogram and inventory AI models.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TOOLS -->
+  <section id="tools">
+    
+    <h2>What I Work With</h2>
+    <p>Platforms and tools I use actively for annotation work:</p>
+    <div class="tools-list">
+      <span class="tool-tag">Label Studio</span>
+      <span class="tool-tag">Bounding Boxes</span>
+      <span class="tool-tag">Polygon Segmentation</span>
+      <span class="tool-tag">Keypoint Annotation</span>
+      <span class="tool-tag">Video Annotation</span>
+      <span class="tool-tag">Audio Transcription</span>
+      <span class="tool-tag">Roboflow</span>
+      <span class="tool-tag">CVAT</span>
+      <span class="tool-tag">QGIS</span>
+      <span class="tool-tag">OneForma</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">contact</div>
+    <h2>Work With Me</h2>
+    <p>Available for data annotation contracts, freelance projects, and AI training data work. Reach out via any of the channels below.</p>
+
+    <div class="contact-grid">
+      <a href="mailto:wanjikumuritu91@gmail.com" class="contact-card">
+        <div class="contact-card-label">Email</div>
+        <div class="contact-card-value">wanjikumuritu91@gmail.com</div>
+      </a>
+
+      <a href="https://www.upwork.com/freelancers/~01ebf55998e33595fb" target="_blank" class="contact-card">
+        <div class="contact-card-label">Upwork</div>
+        <div class="contact-card-value">View Profile →</div>
+      </a>
+      <a href="https://github.com/eunicemuritu" target="_blank" class="contact-card">
+        <div class="contact-card-label">GitHub</div>
+        <div class="contact-card-value">eunicemuritu</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
